@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+import textwrap
 
 # Declare all the rooms
 
@@ -38,12 +40,43 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player("Slender", room['outside'])
 
 # Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
+
+while True:
+    # Prints the current room name
+    print(player.current_room.name)
+
+    # Prints the current description.
+    print(textwrap.wrap(player.current_room.description))
+
+    # * Waits for user input and decides what to do.
+    user_input = input("Enter cardinal direction e.g n, w, e, s")
+    if user_input.lower() == "n":
+        if player.current_room.n_to:
+            player.current_room = player.current_room.n_to
+        else:
+            print("You can't move that way")
+    elif user_input.lower() == "s":
+        if player.current_room.s_to
+        player.current_room = player.current_room.s_to
+        else:
+            print("You can't move that way")
+    elif user_input.lower() == "w":
+        if player.current_room.w_to:
+            player.current_room = player.current_room.w_to
+        else:
+            print("You can't got that way")
+    elif user_input.lower() == "e":
+        if player.current_room.e_to:
+            player.current_room = player.current_room.e_to
+    elif user_input.lower() == "q":
+        break
+    else:
+        user_input = input(
+            "Invalid letter Enter cardinal direction e.g n, w, e, s")
+
 #
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
