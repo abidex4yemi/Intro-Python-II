@@ -51,16 +51,16 @@ while True:
     # Prints the current description.
     print(textwrap.wrap(player.current_room.description))
 
-    # * Waits for user input and decides what to do.
     user_input = input("Enter cardinal direction e.g n, w, e, s")
+
     if user_input.lower() == "n":
         if player.current_room.n_to:
             player.current_room = player.current_room.n_to
         else:
             print("You can't move that way")
     elif user_input.lower() == "s":
-        if player.current_room.s_to
-        player.current_room = player.current_room.s_to
+        if player.current_room.s_to:
+            player.current_room = player.current_room.s_to
         else:
             print("You can't move that way")
     elif user_input.lower() == "w":
