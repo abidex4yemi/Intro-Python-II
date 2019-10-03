@@ -1,6 +1,6 @@
 from room import Room
 from player import Player
-import textwrap
+from item import Item
 
 # Declare all the rooms
 
@@ -23,6 +23,12 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+knife = Item("Knife", "Knife is a good tool to have")
+net = Item("Net", "shield yourself from mosquitoes")
+gin = Item("Gin", "drink some gin")
+
+room["outside"].add_item([knife, net, gin])
+room["outside"].get_item("Gin")
 
 # Link rooms together
 
@@ -38,31 +44,15 @@ room['treasure'].s_to = room['narrow']
 # Make a new player object that is currently in the 'outside' room.
 player = Player("Slender", room['outside'])
 
-
-def move_to_room_toward(player, valid_directions, user_input):
+while True:
+    valid_directions = ["n", "e", "w", "s"]
+    user_input = input("Enter cardinal direction e.g n, w, e, s \n =>")
 
     if user_input.lower() in valid_directions:
-        if getattr(player.current_room, f"{user_input}_to") is not None:
-            player.current_room = getattr(
-                player.current_room, f"{user_input}_to")
-        else:
-            print("You can't move that way")
+        player.move(user_input)
     elif user_input.lower() == "q":
         print("You quit :) bye...")
         exit()
     else:
         user_input = input(
             "Invalid direction Enter cardinal direction e.g n, w, e, s\n =>")
-
-
-def display_current_player_room_details(player):
-    print(player.current_room.name)
-    print(textwrap.wrap(player.current_room.description))
-
-
-while True:
-    display_current_player_room_details(player)
-
-    valid_directions = ["n", "e", "w", "s"]
-    user_input = input("Enter cardinal direction e.g n, w, e, s \n =>")
-    move_to_room_toward(player, valid_directions, user_input)
