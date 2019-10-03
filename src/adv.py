@@ -39,37 +39,30 @@ room['treasure'].s_to = room['narrow']
 player = Player("Slender", room['outside'])
 
 
-def move_to_room_toward(player, direction):
-    if getattr(player.current_room, direction) is not None:
-        player.current_room = getattr(player.current_room, direction)
+def move_to_room_toward(player, valid_directions, user_input):
+
+    if user_input.lower() in valid_directions:
+        if getattr(player.current_room, f"{user_input}_to") is not None:
+            player.current_room = getattr(
+                player.current_room, f"{user_input}_to")
+        else:
+            print("You can't move that way")
+    elif user_input.lower() == "q":
+        print("You quit :) bye...")
+        exit()
     else:
-        print("You can't move that way")
+        user_input = input(
+            "Invalid direction Enter cardinal direction e.g n, w, e, s\n =>")
 
 
-def display_current_player_room(player):
-    # Prints the current room name
+def display_current_player_room_details(player):
     print(player.current_room.name)
-
-    # Prints the current description.
     print(textwrap.wrap(player.current_room.description))
 
 
 while True:
-    display_current_player_room(player)
+    display_current_player_room_details(player)
 
+    valid_directions = ["n", "e", "w", "s"]
     user_input = input("Enter cardinal direction e.g n, w, e, s \n =>")
-
-    if user_input.lower() == "n":
-        move_to_room_toward(player, "n_to")
-    elif user_input.lower() == "s":
-        move_to_room_toward(player, "s_to")
-    elif user_input.lower() == "w":
-        move_to_room_toward(player, "w_to")
-    elif user_input.lower() == "e":
-        move_to_room_toward(player, "e_to")
-    elif user_input.lower() == "q":
-        print("You quit :) bye...")
-        break
-    else:
-        user_input = input(
-            "Invalid letter Enter cardinal direction e.g n, w, e, s\n =>")
+    move_to_room_toward(player, valid_directions, user_input)
