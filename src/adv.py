@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -21,6 +23,12 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+knife = Item("Knife", "Knife is a good tool to have")
+net = Item("Net", "shield yourself from mosquitoes")
+gin = Item("Gin", "drink some gin")
+
+room["outside"].add_item([knife, net, gin])
+room["outside"].get_item("Gin")
 
 # Link rooms together
 
@@ -33,19 +41,18 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
-# Main
-#
-
 # Make a new player object that is currently in the 'outside' room.
+player = Player("Slender", room['outside'])
 
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+while True:
+    valid_directions = ["n", "e", "w", "s"]
+    user_input = input("Enter cardinal direction e.g n, w, e, s \n =>")
+
+    if user_input.lower() in valid_directions:
+        player.move(user_input)
+    elif user_input.lower() == "q":
+        print("You quit :) bye...")
+        exit()
+    else:
+        user_input = input(
+            "Invalid direction Enter cardinal direction e.g n, w, e, s\n =>")
